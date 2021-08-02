@@ -1,6 +1,6 @@
 # Evaluate News NLP Project
 
-It's a web app that lets you insert a text and summarize it using [Meaning Cloud API](https://www.meaningcloud.com/developer/summarization/doc/1.0/what-is-summarization).
+It's a web app that lets you insert a text and do some sentiment analysis using [Meaning Cloud API](https://learn.meaningcloud.com/developer/sentiment-analysis/2.1/doc/what-is-sentiment-analysis).
 
 **This project was build for The Udacity React Nanodegree Program.** 
 
@@ -13,5 +13,5 @@ It's a web app that lets you insert a text and summarize it using [Meaning Cloud
 * `npm test` to run tests
 
 
-##### Author
+### Author
 - [Aya Ashour](https://github.com/AyAshour)

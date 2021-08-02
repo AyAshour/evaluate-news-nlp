@@ -12,18 +12,9 @@
 
     <body>
 
-        <header>
-            <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
-            </div>
-        </header>
-
         <main>
             <section>
-                <h1>*Enter Text To Summarize*</h1>
+                <h1>*Enter Text To Evaluate*</h1>
             </section>
             <section>
                 <form class="" onsubmit="return Client.handleSubmit(event)">
@@ -33,8 +24,12 @@
             <section>
 
             <section>
-                <strong>Summarization:</strong>
-                <div id="results"></div>
+                <strong>Evaluation:</strong><br/><br/>
+                <div id="agreement"></div>
+                <div id="confidence"></div>
+                <div id="score_tag"></div>
+                <div id="subjectivity"></div>
+                <div id="irony"></div>
             </section>
         </main>
 

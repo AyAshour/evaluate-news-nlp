@@ -1,39 +1,47 @@
+const LANGUAGE = "en"
+
 function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
-    const sentences = 1
-    Client.checkForName(formText)
-    // fetch("https://covid-19-data.p.rapidapi.com/country?name=egypt", {
-    //     "method": "GET",
-    //     "headers": {
-    //         'x-rapidapi-key': '70ef4dc995mshcbb669326dbbda1p1bd7f1jsn6b7f8ca24fac',
-    //         "x-rapidapi-host": "covid-19-data.p.rapidapi.com"
-    //     }
-    // }).catch(err => {
-    //     console.error(err);
-    // });
+    if (!Client.checkForText(formText)) {
+        document.getElementById('results').innerHTML = "failed to evaluate wrong text"
 
-    console.log("::: Form Submitted :::")
+    }
+    else {
+        console.log("::: Form Submitted :::")
 
-    const result = fetch('http://localhost:8081/nlp')
-        .then(response => response.json())
-        .then(res => {
-            console.log(res);
-            return fetch(`https://api.meaningcloud.com/summarization-1.0?key=${res}&txt=${formText}&sentences=${sentences}`, {
-                'method': 'POST'
+        const result = fetch('http://localhost:8081/nlp')
+            .then(response => response.json())
+            .then(res => {
+                const formdata = new FormData();
+                formdata.append("key", res);
+                formdata.append("txt", formText);
+                formdata.append("lang", LANGUAGE);
+
+                const requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                    redirect: 'follow'
+                };
+                return fetch("https://api.meaningcloud.com/sentiment-2.1", requestOptions)
+
             })
-        })
-        .then(response => response.json())
-        .then(function (data) {
-            console.log(data)
-            document.getElementById('results').innerHTML = data.summary
-        })
-        .catch(err => {
-            console.error('Request failed', err)
-            document.getElementById('results').innerHTML = "failed to summa rize text"
-        })
+            .then(response => response.json())
+            .then(function (data) {
+                console.log(data)
+                document.getElementById('confidence').innerHTML = `Confidence : ${data.confidence}`
+                document.getElementById('irony').innerHTML = `Irony : ${data.irony}`
+                document.getElementById('subjectivity').innerHTML = `Subjectivity : ${data.subjectivity}`
+                document.getElementById('score_tag').innerHTML = `Score_tag : ${data.score_tag}`
+                document.getElementById('agreement').innerHTML = `Agreement : ${data.agreement}`
+            })
+            .catch(err => {
+                console.error('Request failed', err)
+                document.getElementById('results').innerHTML = "failed to evaluate text"
+            })
+    }
 
 }
 
